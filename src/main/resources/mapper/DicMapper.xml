@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuesdayma.mysharding.dao.DicMapper">
+  <resultMap id="BaseResultMap" type="com.tuesdayma.mysharding.model.Dic">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="dic_desc" jdbcType="VARCHAR" property="dicDesc" />
+    <result column="dic_type" jdbcType="VARCHAR" property="dicType" />
+    <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, dic_desc, dic_type, dic_name
+  </sql>
+  <select id="selectByExample" parameterType="com.tuesdayma.mysharding.model.DicExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tuesdayma.mysharding.model.DicExample">
+    delete from dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tuesdayma.mysharding.model.Dic">
+    insert into dic (id, dic_desc, dic_type, 
+      dic_name)
+    values (#{id,jdbcType=BIGINT}, #{dicDesc,jdbcType=VARCHAR}, #{dicType,jdbcType=VARCHAR}, 
+      #{dicName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tuesdayma.mysharding.model.Dic">
+    insert into dic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dicDesc != null">
+        dic_desc,
+      </if>
+      <if test="dicType != null">
+        dic_type,
+      </if>
+      <if test="dicName != null">
+        dic_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dicDesc != null">
+        #{dicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dicType != null">
+        #{dicType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        #{dicName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tuesdayma.mysharding.model.DicExample" resultType="java.lang.Long">
+    select count(*) from dic
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dic
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.dicDesc != null">
+        dic_desc = #{record.dicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicType != null">
+        dic_type = #{record.dicType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicName != null">
+        dic_name = #{record.dicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dic
+    set id = #{record.id,jdbcType=BIGINT},
+      dic_desc = #{record.dicDesc,jdbcType=VARCHAR},
+      dic_type = #{record.dicType,jdbcType=VARCHAR},
+      dic_name = #{record.dicName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tuesdayma.mysharding.model.Dic">
+    update dic
+    <set>
+      <if test="dicDesc != null">
+        dic_desc = #{dicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dicType != null">
+        dic_type = #{dicType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        dic_name = #{dicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tuesdayma.mysharding.model.Dic">
+    update dic
+    set dic_desc = #{dicDesc,jdbcType=VARCHAR},
+      dic_type = #{dicType,jdbcType=VARCHAR},
+      dic_name = #{dicName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

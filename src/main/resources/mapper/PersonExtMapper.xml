@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuesdayma.mysharding.dao.PersonExtMapper">
+    <resultMap id="BaseResultMap" type="com.tuesdayma.mysharding.dto.PersonDTO">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="dic_name" jdbcType="INTEGER" property="sexName"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from person p
+        left join dic  d on p.sex=d.id
+        where p.id=#{id} and p.age=#{age}
+    </select>
+</mapper>
